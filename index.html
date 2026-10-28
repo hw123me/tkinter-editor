@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <title>محرر ومحاكي بايثون tkinter (يعمل بدون خادم)</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            background: #1e272e;
+            color: #f1f2f6;
+            margin: 0;
+            padding: 15px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #008080;
+            padding: 12px 20px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .header h2 {
+            margin: 0;
+            font-size: 1.3rem;
+        }
+
+        .workspace {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .editor-pane,
+        .output-pane {
+            flex: 1;
+            min-width: 340px;
+            background: #2f3542;
+            padding: 15px;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        textarea {
+            width: 100%;
+            height: 340px;
+            background: #1e1e1e;
+            color: #dcdcdc;
+            border: 1px solid #57606f;
+            border-radius: 6px;
+            padding: 12px;
+            font-family: Consolas, monospace;
+            font-size: 14px;
+            direction: ltr;
+            text-align: left;
+            resize: vertical;
+            line-height: 1.5;
+            box-sizing: border-box;
+        }
+
+        .toolbar {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            background: #2ed573;
+            color: #1e272e;
+            font-weight: bold;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: 0.2s;
+        }
+
+        button:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+
+        .preset-btn {
+            background: #70a1ff;
+            color: #1e272e;
+            font-size: 12px;
+            padding: 6px 10px;
+        }
+
+        .tk-win {
+            background: #dfe4ea;
+            border: 2px solid #747d8c;
+            border-radius: 6px;
+            display: inline-block;
+            margin: 0 auto;
+            overflow: hidden;
+            color: #2f3542;
+        }
+
+        .tk-bar {
+            padding: 5px 10px;
+            font-size: 13px;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            direction: ltr;
+            background: #ced6e0;
+        }
+
+        #consoleBox {
+            background: #000;
+            color: #00ff00;
+            font-family: Consolas, monospace;
+            padding: 10px;
+            border-radius: 6px;
+            margin-top: 10px;
+            min-height: 60px;
+            direction: ltr;
+            text-align: left;
+            font-size: 13px;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="header">
+        <h2>🐍 بيئة تشغيل بايثون (tkinter) المحلية — بدون انقطاع الجلسة</h2>
+        <span>تعمل 100% داخل المتصفح</span>
+    </div>
+
+    <div class="workspace">
+        <div class="editor-pane">
+            <div class="toolbar">
+                <button onclick="runPythonCode()">▶ تشغيل الكود (Run)</button>
+                <button class="preset-btn" onclick="loadExample(1)">مثال الخطوط</button>
+                <button class="preset-btn" onclick="loadExample(2)">مثال المستطيل والدائرة</button>
+                <button class="preset-btn" onclick="loadExample(3)">مثال المضلع</button>
+                <button class="preset-btn" onclick="loadExample(4)">مثال أحداث الفأرة</button>
+            </div>
+            <textarea id="codeInput" spellcheck="false">from tkinter import *
+window = Tk()
+window.title("Graphics Window")
+canvas = Canvas(bg="teal", width=450, height=300)
+canvas.pack()
+
+canvas.create_rectangle(50, 40, 200, 120, width=3, outline="coral", fill="white")
+canvas.create_oval(250, 40, 370, 160, width=3, fill="yellow")
+canvas.create_line(50, 200, 400, 200, width=4, fill="gold")
+
+window.mainloop()</textarea>
+            <div id="consoleBox">Console Output: جاهز للتشغيل...</div>
+        </div>
+
+        <div class="output-pane" style="align-items: center;">
+            <div class="tk-win">
+                <div class="tk-bar">
+                    <span id="winTitle">🪶 tk</span>
+                    <span>— ☐ ✕</span>
+                </div>
+                <canvas id="tkScreen" width="450" height="300"
+                    style="background: teal; display: block; cursor: crosshair;"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const examples = {
+            1: `from tkinter import *\nwindow = Tk()\nwindow.title("Lines")\ncanvas = Canvas(bg="darkgreen", width=450, height=300)\ncanvas.pack()\ncanvas.create_line(10, 10, 150, 150, width=5, fill="red")\ncanvas.create_line(10, 150, 150, 10, width=3, fill="gold")\ncanvas.create_line(240, 20, 160, 120, 320, 120, 240, 20, width=3, fill="white")\nwindow.mainloop()`,
+            2: `from tkinter import *\nwindow = Tk()\nwindow.title("Shapes")\ncanvas = Canvas(bg="black", width=450, height=300)\ncanvas.pack()\ncanvas.create_oval(60, 70, 210, 220, fill="green")\ncanvas.create_oval(210, 70, 360, 220, fill="yellow")\nwindow.mainloop()`,
+            3: `from tkinter import *\nwindow = Tk()\ncanvas = Canvas(bg="white", width=450, height=300)\ncanvas.pack()\npoints = [100,80, 180,80, 220,150, 180,220, 100,220, 60,150]\ncanvas.create_polygon(points, fill="green")\nwindow.mainloop()`,
+            4: `from tkinter import *\nwindow = Tk()\ndef callback(event):\n    print("clicked at", event.x, event.y)\ncanvas = Canvas(bg="teal", width=450, height=300)\ncanvas.bind("<Button-1>", callback)\ncanvas.pack()\nwindow.mainloop()`
+        };
+
+        function loadExample(num) {
+            document.getElementById('codeInput').value = examples[num];
+            runPythonCode();
+        }
+
+        let clickListener = null;
+
+        function parseKwargs(str) {
+            const kwargs = {};
+            const regex = /(\w+)\s*=\s*(?:"([^"]*)"|'([^']*)'|(\d+))/g;
+            let m;
+            while ((m = regex.exec(str)) !== null) {
+                kwargs[m[1]] = m[2] || m[3] || Number(m[4]);
+            }
+            return kwargs;
+        }
+
+        function runPythonCode() {
+            const code = document.getElementById('codeInput').value;
+            const canvas = document.getElementById('tkScreen');
+            const ctx = canvas.getContext('2d');
+            const consoleBox = document.getElementById('consoleBox');
+            const winTitle = document.getElementById('winTitle');
+
+            consoleBox.textContent = "Console Output:\n";
+            winTitle.textContent = "🪶 tk";
+            if (clickListener) {
+                canvas.removeEventListener('mousedown', clickListener);
+                canvas.removeEventListener('dblclick', clickListener);
+            }
+
+            try {
+                // قراءة عنوان النافذة
+                const titleMatch = code.match(/window\.title\(\s*["']([^"']*)["']\s*\)/);
+                if (titleMatch) winTitle.textContent = "🪶 " + titleMatch[1];
+
+                // قراءة إعدادات Canvas
+                const canvasMatch = code.match(/Canvas\(([^)]*)\)/);
+                if (canvasMatch) {
+                    const kw = parseKwargs(canvasMatch[1]);
+                    canvas.width = kw.width || 450;
+                    canvas.height = kw.height || 300;
+                    canvas.style.background = kw.bg || 'teal';
+                }
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                // قراءة متغير points للمضلع إن وجد
+                let savedPoints = [];
+                const ptsMatch = code.match(/points\s*=\s*\[([^\]]+)\]/);
+                if (ptsMatch) {
+                    savedPoints = ptsMatch[1].split(',').map(n => parseFloat(n.trim()));
+                }
+
+                // تحليل سطور الرسم
+                const lines = code.split('\n');
+                for (let line of lines) {
+                    line = line.trim();
+                    if (line.startsWith('#') || !line) continue;
+
+                    // create_line
+                    if (line.includes('create_line(')) {
+                        const inner = line.substring(line.indexOf('(') + 1, line.lastIndexOf(')'));
+                        const kw = parseKwargs(inner);
+                        const nums = inner.replace(/(\w+)\s*=\s*(?:"[^"]*"|'[^']*'|\d+)/g, '').split(',').map(s => parseFloat(s.trim())).filter(n => !isNaN(n));
+                        if (nums.length >= 4) {
+                            ctx.save();
+                            ctx.strokeStyle = kw.fill || 'black';
+                            ctx.lineWidth = kw.width || 1;
+                            if (kw.dash) ctx.setLineDash([10, 8]);
+                            ctx.beginPath();
+                            ctx.moveTo(nums[0], nums[1]);
+                            for (let i = 2; i < nums.length; i += 2) ctx.lineTo(nums[i], nums[i + 1]);
+                            ctx.stroke();
+                            ctx.restore();
+                        }
+                    }
+
+                    // create_rectangle
+                    if (line.includes('create_rectangle(')) {
+                        const inner = line.substring(line.indexOf('(') + 1, line.lastIndexOf(')'));
+                        const kw = parseKwargs(inner);
+                        const nums = inner.replace(/(\w+)\s*=\s*(?:"[^"]*"|'[^']*'|\d+)/g, '').split(',').map(s => parseFloat(s.trim())).filter(n => !isNaN(n));
+                        if (nums.length >= 4) {
+                            ctx.save();
+                            const w = nums[2] - nums[0], h = nums[3] - nums[1];
+                            if (kw.fill) { ctx.fillStyle = kw.fill; ctx.fillRect(nums[0], nums[1], w, h); }
+                            ctx.strokeStyle = kw.outline || 'black';
+                            ctx.lineWidth = kw.width || 1;
+                            ctx.strokeRect(nums[0], nums[1], w, h);
+                            ctx.restore();
+                        }
+                    }
+
+                    // create_oval
+                    if (line.includes('create_oval(')) {
+                        const inner = line.substring(line.indexOf('(') + 1, line.lastIndexOf(')'));
+                        const kw = parseKwargs(inner);
+                        const nums = inner.replace(/(\w+)\s*=\s*(?:"[^"]*"|'[^']*'|\d+)/g, '').split(',').map(s => parseFloat(s.trim())).filter(n => !isNaN(n));
+                        if (nums.length >= 4) {
+                            ctx.save();
+                            const rx = Math.abs(nums[2] - nums[0]) / 2;
+                            const ry = Math.abs(nums[3] - nums[1]) / 2;
+                            const cx = Math.min(nums[0], nums[2]) + rx;
+                            const cy = Math.min(nums[1], nums[3]) + ry;
+                            ctx.beginPath();
+                            ctx.ellipse(cx, cy, rx, ry, 0, 0, Math.PI * 2);
+                            if (kw.fill) { ctx.fillStyle = kw.fill; ctx.fill(); }
+                            ctx.strokeStyle = kw.outline || 'black';
+                            ctx.lineWidth = kw.width || 1;
+                            ctx.stroke();
+                            ctx.restore();
+                        }
+                    }
+
+                    // create_polygon
+                    if (line.includes('create_polygon(')) {
+                        const inner = line.substring(line.indexOf('(') + 1, line.lastIndexOf(')'));
+                        const kw = parseKwargs(inner);
+                        let pts = savedPoints;
+                        if (pts.length >= 4) {
+                            ctx.save();
+                            ctx.beginPath();
+                            ctx.moveTo(pts[0], pts[1]);
+                            for (let i = 2; i < pts.length; i += 2) ctx.lineTo(pts[i], pts[i + 1]);
+                            ctx.closePath();
+                            ctx.fillStyle = kw.fill || 'black';
+                            ctx.fill();
+                            ctx.restore();
+                        }
+                    }
+
+                    // bind events
+                    if (line.includes('.bind(')) {
+                        const isDouble = line.includes('Double-Button-1');
+                        clickListener = function (e) {
+                            const r = canvas.getBoundingClientRect();
+                            const x = Math.round(e.clientX - r.left);
+                            const y = Math.round(e.clientY - r.top);
+                            consoleBox.textContent += `clicked at ${x} ${y}\n`;
+                        };
+                        canvas.addEventListener(isDouble ? 'dblclick' : 'mousedown', clickListener);
+                    }
+                }
+                consoleBox.textContent += "تم التنفيذ بنجاح (الجلسة نشطة ومستقرة).\n";
+            } catch (err) {
+                consoleBox.textContent += "خطأ في الكود: " + err.message;
+            }
+        }
+
+        runPythonCode();
+    </script>
+
+</body>
+
+</html>
