@@ -220,7 +220,7 @@ window.mainloop()</textarea>
                 const canvasMatch = code.match(/Canvas\(([^)]*)\)/);
                 if (canvasMatch) {
                     const kw = parseKwargs(canvasMatch[1]);
-                    canvas.width = kw.width || 450;
+                    canvas.width = kw.width || 350;
                     canvas.height = kw.height || 300;
                     canvas.style.background = kw.bg || 'teal';
                 }
