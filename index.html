@@ -149,7 +149,7 @@
             <textarea id="codeInput" spellcheck="false">from tkinter import *
 window = Tk()
 window.title("Graphics Window")
-canvas = Canvas(bg="teal", width=450, height=300)
+canvas = Canvas(bg="teal", width=350, height=300)
 canvas.pack()
 
 canvas.create_rectangle(50, 40, 200, 120, width=3, outline="coral", fill="white")
@@ -166,7 +166,7 @@ window.mainloop()</textarea>
                     <span id="winTitle">🪶 tk</span>
                     <span>— ☐ ✕</span>
                 </div>
-                <canvas id="tkScreen" width="450" height="300"
+                <canvas id="tkScreen" width="350" height="300"
                     style="background: teal; display: block; cursor: crosshair;"></canvas>
             </div>
         </div>
@@ -174,10 +174,10 @@ window.mainloop()</textarea>
 
     <script>
         const examples = {
-            1: `from tkinter import *\nwindow = Tk()\nwindow.title("Lines")\ncanvas = Canvas(bg="darkgreen", width=450, height=300)\ncanvas.pack()\ncanvas.create_line(10, 10, 150, 150, width=5, fill="red")\ncanvas.create_line(10, 150, 150, 10, width=3, fill="gold")\ncanvas.create_line(240, 20, 160, 120, 320, 120, 240, 20, width=3, fill="white")\nwindow.mainloop()`,
-            2: `from tkinter import *\nwindow = Tk()\nwindow.title("Shapes")\ncanvas = Canvas(bg="black", width=450, height=300)\ncanvas.pack()\ncanvas.create_oval(60, 70, 210, 220, fill="green")\ncanvas.create_oval(210, 70, 360, 220, fill="yellow")\nwindow.mainloop()`,
-            3: `from tkinter import *\nwindow = Tk()\ncanvas = Canvas(bg="white", width=450, height=300)\ncanvas.pack()\npoints = [100,80, 180,80, 220,150, 180,220, 100,220, 60,150]\ncanvas.create_polygon(points, fill="green")\nwindow.mainloop()`,
-            4: `from tkinter import *\nwindow = Tk()\ndef callback(event):\n    print("clicked at", event.x, event.y)\ncanvas = Canvas(bg="teal", width=450, height=300)\ncanvas.bind("<Button-1>", callback)\ncanvas.pack()\nwindow.mainloop()`
+            1: `from tkinter import *\nwindow = Tk()\nwindow.title("Lines")\ncanvas = Canvas(bg="darkgreen", width=350, height=300)\ncanvas.pack()\ncanvas.create_line(10, 10, 150, 150, width=5, fill="red")\ncanvas.create_line(10, 150, 150, 10, width=3, fill="gold")\ncanvas.create_line(240, 20, 160, 120, 320, 120, 240, 20, width=3, fill="white")\nwindow.mainloop()`,
+            2: `from tkinter import *\nwindow = Tk()\nwindow.title("Shapes")\ncanvas = Canvas(bg="black", width=350, height=300)\ncanvas.pack()\ncanvas.create_oval(60, 70, 210, 220, fill="green")\ncanvas.create_oval(210, 70, 360, 220, fill="yellow")\nwindow.mainloop()`,
+            3: `from tkinter import *\nwindow = Tk()\ncanvas = Canvas(bg="white", width=350, height=300)\ncanvas.pack()\npoints = [100,80, 180,80, 220,150, 180,220, 100,220, 60,150]\ncanvas.create_polygon(points, fill="green")\nwindow.mainloop()`,
+            4: `from tkinter import *\nwindow = Tk()\ndef callback(event):\n    print("clicked at", event.x, event.y)\ncanvas = Canvas(bg="teal", width=350, height=300)\ncanvas.bind("<Button-1>", callback)\ncanvas.pack()\nwindow.mainloop()`
         };
 
         function loadExample(num) {
@@ -220,7 +220,7 @@ window.mainloop()</textarea>
                 const canvasMatch = code.match(/Canvas\(([^)]*)\)/);
                 if (canvasMatch) {
                     const kw = parseKwargs(canvasMatch[1]);
-                    canvas.width = kw.width || 450;
+                    canvas.width = kw.width || 350;
                     canvas.height = kw.height || 300;
                     canvas.style.background = kw.bg || 'teal';
                 }
