@@ -133,7 +133,7 @@
 <body>
 
     <div class="header">
-        <h2>🐍 بيئة تشغيل بايثون (tkinter) المحلية </h2>
+        <h2>🐍 بيئة تشغيل بايثون (tkinter) المحلية — بدون انقطاع الجلسة</h2>
         <span>تعمل 100% داخل المتصفح</span>
     </div>
 
@@ -149,7 +149,7 @@
             <textarea id="codeInput" spellcheck="false">from tkinter import *
 window = Tk()
 window.title("Graphics Window")
-canvas = Canvas(bg="teal", width=350, height=300)
+canvas = Canvas(bg="teal", width=450, height=300)
 canvas.pack()
 
 canvas.create_rectangle(50, 40, 200, 120, width=3, outline="coral", fill="white")
@@ -166,7 +166,7 @@ window.mainloop()</textarea>
                     <span id="winTitle">🪶 tk</span>
                     <span>— ☐ ✕</span>
                 </div>
-                <canvas id="tkScreen" width="350" height="300"
+                <canvas id="tkScreen" width="450" height="300"
                     style="background: teal; display: block; cursor: crosshair;"></canvas>
             </div>
         </div>
@@ -220,7 +220,7 @@ window.mainloop()</textarea>
                 const canvasMatch = code.match(/Canvas\(([^)]*)\)/);
                 if (canvasMatch) {
                     const kw = parseKwargs(canvasMatch[1]);
-                    canvas.width = kw.width || 350;
+                    canvas.width = kw.width || 450;
                     canvas.height = kw.height || 300;
                     canvas.style.background = kw.bg || 'teal';
                 }
