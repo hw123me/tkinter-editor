@@ -152,9 +152,9 @@ window.title("Graphics Window")
 canvas = Canvas(bg="teal", width=350, height=300)
 canvas.pack()
 
-canvas.create_rectangle(50, 40, 200, 120, width=3, outline="coral", fill="white")
-canvas.create_oval(250, 40, 370, 160, width=3, fill="yellow")
-canvas.create_line(50, 200, 400, 200, width=4, fill="gold")
+canvas.create_rectangle(20, 40, 170, 120, width=3, outline="coral", fill="white")
+canvas.create_oval(200, 40, 320, 160, width=3, fill="yellow")
+canvas.create_line(20, 200, 300, 200, width=4, fill="gold")
 
 window.mainloop()</textarea>
             <div id="consoleBox">Console Output: جاهز للتشغيل...</div>
@@ -175,7 +175,7 @@ window.mainloop()</textarea>
     <script>
         const examples = {
             1: `from tkinter import *\nwindow = Tk()\nwindow.title("Lines")\ncanvas = Canvas(bg="darkgreen", width=350, height=300)\ncanvas.pack()\ncanvas.create_line(10, 10, 150, 150, width=5, fill="red")\ncanvas.create_line(10, 150, 150, 10, width=3, fill="gold")\ncanvas.create_line(240, 20, 160, 120, 320, 120, 240, 20, width=3, fill="white")\nwindow.mainloop()`,
-            2: `from tkinter import *\nwindow = Tk()\nwindow.title("Shapes")\ncanvas = Canvas(bg="black", width=350, height=300)\ncanvas.pack()\ncanvas.create_rectangle(60, 70, 210, 220, fill="green")\ncanvas.create_oval(210, 70, 360, 220, fill="yellow")\nwindow.mainloop()`,
+            2: `from tkinter import *\nwindow = Tk()\nwindow.title("Shapes")\ncanvas = Canvas(bg="black", width=350, height=300)\ncanvas.pack()\ncanvas.create_rectangle(30, 70, 180, 220, fill="green")\ncanvas.create_oval(190, 70, 340, 220, fill="yellow")\nwindow.mainloop()`,
             3: `from tkinter import *\nwindow = Tk()\ncanvas = Canvas(bg="white", width=350, height=300)\ncanvas.pack()\npoints = [100,80, 180,80, 220,150, 180,220, 100,220, 60,150]\ncanvas.create_polygon(points, fill="green")\nwindow.mainloop()`,
             4: `from tkinter import *\nwindow = Tk()\ndef callback(event):\n    print("clicked at", event.x, event.y)\ncanvas = Canvas(bg="teal", width=350, height=300)\ncanvas.bind("<Button-1>", callback)\ncanvas.pack()\nwindow.mainloop()`
         };
